@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>buat kamu yang spesial</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:white; 
+overflow:hidden;
+}
+
+.bg{
+height:100vh;
+width:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+position:relative;
+z-index:5;
+}
+
+.pesan{
+cursor:pointer;
+text-align:center;
+border:3px solid;
+border-image:linear-gradient(45deg,#ff4da6,#8a6ff) 1;
+padding:20px;
+border-radius:20px;
+animation:fadeIn 1s;
+background: linear-gradient(135deg,#ffd6ec,#ffe8b6,#d9f3ff);
+position:relative;
+z-index:5;
+}
+
+.pesan img{
+width:150px;
+}
+
+.content{
+display:none;
+text-align:center;
+margin-top:20px;
+border:3px solid;
+border-image:linear-gradient(45deg,#ff4da6,#8a6ff) 1;
+padding:30px;
+border-radius:20px;
+animation:fadeIn 1s;
+background: linear-gradient(135deg,#d9f3ff,#ffe8b6,#ffd6ec);
+position:relative;
+z-index:5;
+}
+
+.kado{
+width:150px;
+margin-bottom:20px;
+}
+
+.kata{
+font-size:20px;
+margin-bottom:20px;
+}
+
+button{
+padding:12px 25px;
+margin:10px;
+font-size:16px;
+cursor:pointer;
+border-radius:10px;
+border:2px solid #ff4da6;
+background:white;
+transition:0.3s;
+}
+
+button:hover{
+background:#ffe0f1;
+transform:scale(1.1);
+}
+
+#countdown{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:10;
+font-family:'Playfair Display',serif;
+}
+
+#angka{
+font-size:120px;
+position:absolute;
+top:40%;
+opacity:1;
+color:#ff4da6;
+text-shadow:
+0 0 10px #ff8fd0,
+0 0 20px #ff8fd0,
+0 0 40px #ff4da6;
+}
+
+#text{
+font-size:60px;
+opacity:0;
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:#ff4da6;
+text-shadow:
+0 0 10px #ff8fd0,
+0 0 20px #ff8fd0,
+0 0 40px #ff8fd0;
+}
+
+#videoContainer{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(135deg,#ffd6ec,#ffe8b6,#d9f3ff);
+z-index:11;
+}
+
+#videoContainer video{
+width:100%;
+height:100%;
+object-fit:cover;
+pointer-events:none;
+}
+
+#halaman2{
+display:none;
+height:100vh;
+background:white; 
+}
+
+.slideshow-container{
+position:relative;
+width:100vw;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.slide{
+display:none;
+position:absolute;
+width:80%;
+max-width:600px;
+padding:25px;
+background: linear-gradient(135deg,#ffd6ec,#ffe8b6,#d9f3ff); 
+border-radius:20px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+font-size:22px;
+color:#333;
+border:3px solid;
+border-image:linear-gradient(45deg,#ff4da6,#8a6ff) 1;
+opacity:0;
+transform:translateY(40px);
+z-index:5;
+}
+
+.slide.active{
+display:block;
+animation:slideMasuk 1s forwards;
+}
+
+.slide.keluar{
+animation:slideKeluar 1s forwards;
+}
+
+@keyframes slideMasuk{
+0%{opacity:0;transform:translateY(40px);}
+100%{opacity:1;transform:translateY(0);}
+}
+
+@keyframes slideKeluar{
+0%{opacity:1;transform:translateY(0);}
+100%{opacity:0;transform:translateY(-40px);}
+}
+
+.love{
+position:absolute;
+bottom:-50px;
+font-size:24px;
+color:pink;
+animation:floatUp 4s infinite ease-in-out;
+opacity:0.8;
+pointer-events:none;
+z-index:1;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(0);opacity:1}
+100%{transform:translateY(-100vh);opacity:0}
+}
+
+.star{
+position:absolute;
+width:5px;
+height:5px;
+background:yellow;
+border-radius:50%;
+animation:starUp linear infinite;
+pointer-events:none;
+z-index:1;
+}
+
+@keyframes starUp{
+0%{transform:translateY(0);opacity:0;}
+20%{opacity:1;}
+100%{transform:translateY(-100vh);opacity:0;}
+}
+
+.explosion{
+position:absolute;
+font-size:20px;
+color:red;
+animation:explode 0.6s ease-out;
+pointer-events:none;
+}
+
+@keyframes explode{
+0%{transform:scale(1);opacity:1}
+100%{transform:scale(3);opacity:0}
+}
+
+@keyframes jatuh{
+0%{transform:translateY(-500px);opacity:0;}
+40%{opacity:1;}
+80%{transform:translateY(40px);}
+100%{transform:translateY(0);opacity:1;}
+}
+
+@keyframes keluar{
+0%{transform:scale(1);opacity:1;}
+100%{transform:scale(0.3);opacity:0;}
+}
+
+@keyframes textMasuk{
+0%{transform:scale(0.5);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+@keyframes textKeluar{
+0%{transform:scale(1);opacity:1;}
+100%{transform:scale(0.5);opacity:0;}
+}
+
+@keyframes fadeIn{
+from{opacity:0}
+to{opacity:1}
+}
+
+#playMusic{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#ff4d6d;
+color:white;
+border:none;
+padding:10px 20px;
+cursor:pointer;
+border-radius:5px;
+font-size:16px;
+}
+</style>
+
+</head>
+
+<body onclick="explodeLove(event)">
+
+<audio id="klikSound" src="mp3\1.mpeg"></audio> <audio id="iyaSound" src="mp3\2.mpeg"></audio> <audio id="noSound" src="mp3\3.mpeg"></audio>
+
+<div class="bg" id="halaman1">
+
+<div class="pesan" id="kotakSurat">
+<img src="img\1.png" onclick="pesanHilang()">
+<div>klik surat nya yah 🥺</div>
+</div>
+
+<div class="content">
+
+<img src="img\2.webp" class="kado">
+
+<p class="kata">kamu udah tenang belom? 🥺</p>
+
+<button class="iya" onclick="clik(this)">udah 🥹</button> <button class="enggak" id="btnNo" onclick="clik(this)">belom 😞</button>
+
+</div>
+
+</div>
+
+<div id="countdown">
+<div id="angka"></div>
+<div id="text">Selamat menikmati aca 🥹</div>
+</div>
+
+<div id="videoContainer">
+<video id="myVideo" autoplay controlsList="nodownload noplaybackrate" disablePictureInPicture>
+<source src="mp4\1.mp4" type="video/mp4">
+</video>
+</div>
+
+<div id="halaman2">
+
+<audio id="bgMusic">
+<source src="lagu/lagu.mp3" type="audio/mpeg">
+</audio>
+
+<div class="slideshow-container">
+
+<div class="slide active">ca, aku mau minta maaf ya. aku sadar mungkin sikap aku belakangan ini bikin kamu kecewa atau sedih 😞</div>
+<div class="slide">kadang aku terlalu keras kepala dan ngomong tanpa pikir panjang, sampai tanpa sadar nyakitin kamu 😞</div>
+<div class="slide">ca jujur, aku nggak pernah ada niat buat bikin kamu ngerasa nggak dihargai oleh aku 🥺</div>
+<div class="slide">kalau aku bisa ngulang waktu, aku pasti bakal jaga kata-kata dan sikap aku lebih baik ke kamu 🥺</div>
+<div class="slide">aku takut kehilangan kamu lagi gara-gara kesalahan aku sendiri 🥺</div>
+<div class="slide">kamu itu berarti banget buat aku, lebih dari apa yang kamu pikirkan 🥺</div>
+<div class="slide">jadi aku cuma mau bilang satu hal… maafin aku ya ca, kamu masih jadi orang yang paling berarti buat aku 🥺</div>
+
+</div>
+
+<button id="playMusic">Putar Musik 🎵</button>
+
+</div>
+
+<script>
+
+function playSound(audio){
+document.querySelectorAll("audio").forEach(a=>{
+a.pause();
+a.currentTime=0;
+});
+audio.play();
+}
+
+function pesanHilang(){
+playSound(document.getElementById("klikSound"));
+document.getElementById("kotakSurat").style.display="none";
+document.querySelector(".content").style.display="block";
+}
+
+function clik(el){
+if(el.classList.contains("iya")){
+playSound(document.getElementById("iyaSound"));
+showCountdownBeforeSlides();
+}else{
+playSound(document.getElementById("noSound"));
+setTimeout(()=>{alert("yaahh, aca kenapaa belomm tenang 🥺");},50);
+}
+}
+
+let btnNo=document.getElementById("btnNo");
+btnNo.addEventListener("mouseover",function(){
+let x=Math.random()*300-150;
+let y=Math.random()*200-100;
+btnNo.style.transform=`translate(${x}px,${y}px)`;
+});
+
+function showCountdownBeforeSlides(){
+document.getElementById("halaman1").style.display="none";
+let cd = document.getElementById("countdown");
+cd.style.display="flex";
+
+let angka = document.getElementById("angka");
+let text = document.getElementById("text");
+let numbers = [3,2,1];
+let i = 0;
+
+function animasiAngka(){
+angka.innerHTML = numbers[i];
+angka.style.animation = "jatuh 0.8s forwards";
+setTimeout(()=>{angka.style.animation = "keluar 0.5s forwards";},900);
+
+setTimeout(()=>{
+i++;
+if(i<numbers.length){
+animasiAngka();
+}else{
+text.style.animation="textMasuk 1s forwards";
+setTimeout(()=>{
+text.style.animation="textKeluar 1s forwards";
+setTimeout(()=>{
+cd.style.display="none";
+let videoContainer=document.getElementById("videoContainer");
+videoContainer.style.display="block";
+let video=document.getElementById("myVideo");
+video.play();
+video.onended=function(){
+videoContainer.style.display="none"; 
+document.getElementById("halaman2").style.display="block";
+startSlides();
+}
+},1000);
+},2000);
+}
+},1300);
+}
+
+animasiAngka();
+}
+
+let slides=document.querySelectorAll(".slide");
+let index=0;
+
+function startSlides(){
+function showSlides(){
+slides[index].classList.remove("active");
+slides[index].classList.add("keluar");
+
+setTimeout(()=>{
+slides[index].classList.remove("keluar");
+index=(index+1)%slides.length;
+slides[index].classList.add("active");
+},800);
+}
+setInterval(showSlides,5000);
+}
+
+let music=document.getElementById("bgMusic");
+let playButton=document.getElementById("playMusic");
+
+playButton.addEventListener("click",function(){
+playSound(music);
+playButton.style.display="none";
+});
+
+function createLove(){
+for(let i=0;i<3;i++){
+let love=document.createElement("div");
+love.classList.add("love");
+love.innerHTML="❤";
+love.style.left=Math.random()*100+"vw";
+love.style.animationDuration=Math.random()*2+3+"s";
+document.body.appendChild(love);
+setTimeout(()=>love.remove(),4000);
+}
+}
+setInterval(createLove,300);
+
+function createStar(){
+for(let i=0;i<4;i++){
+let star=document.createElement("div");
+star.classList.add("star");
+star.style.left=Math.random()*100+"vw";
+star.style.bottom="-10px";
+star.style.animationDuration=Math.random()*4+3+"s";
+document.body.appendChild(star);
+setTimeout(()=>star.remove(),6000);
+}
+}
+setInterval(createStar,300);
+
+function explodeLove(event){
+let explosion=document.createElement("div");
+explosion.classList.add("explosion");
+explosion.innerHTML="💗";
+explosion.style.left=event.clientX+"px";
+explosion.style.top=event.clientY+"px";
+document.body.appendChild(explosion);
+setTimeout(()=>explosion.remove(),600);
+}
+
+</script>
+</body>
+</html>
