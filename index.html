@@ -317,7 +317,7 @@ to{opacity:1}
 
 <div id="halaman2">
 
-<audio id="bgMusic">
+<audio id="bgMusic" loop>
 <source src="mp3\4.mpeg" type="audio/mpeg">
 </audio>
 
@@ -420,6 +420,9 @@ let music=document.getElementById("bgMusic");
 music.play();
 
 function showSlides(){
+
+let durasi = 10000;
+
 slides[index].classList.remove("active");
 slides[index].classList.add("keluar");
 
@@ -428,9 +431,11 @@ slides[index].classList.remove("keluar");
 index=(index+1)%slides.length;
 slides[index].classList.add("active");
 },800);
+
+setTimeout(showSlides,durasi);
 }
 
-setInterval(showSlides,5000);
+setTimeout(showSlides,10000);
 }
 
 function createLove(){
